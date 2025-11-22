@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 import './App.css';
@@ -9,9 +9,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [isCompleteScreen, setIsCompleteScreen] = useState(false);
+  
+  // state array
   const [allTodos, setTodos] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewdescription] = useState("");
+
+
+
 
   const handleAddTool = ()=>
   {
@@ -21,13 +26,47 @@ function App() {
       description:newDescription
     }
 
+  // copy the array and add new item
     let updatedTodoArr = 
     [
       ...allTodos
     ];
     updatedTodoArr.push(newTodoitem);
     setTodos(updatedTodoArr)
+    // whenever you store array or object in local storage convert into string then we can use globally
+    // then they pass the array
+    localStorage.setItem('todolist',JSON.stringify
+      (updatedTodoArr))
+  };
+
+  // delete todo item
+  const handleDeleteTodo = (index)=>
+  {
+    let reducedTodo = [...allTodos]
+    // remaning the array
+    reducedTodo.splice(index);
+    localStorage.setItem('todolist',JSON.stringify(reducedTodo) )
+    setTodos(reducedTodo)
   }
+
+  // useEffect use it
+// useeffect use that when ever use render the component
+// when ever the render the component first time to check local storage having item or not then thy popuplate the local storage
+  useEffect(()=>
+  {
+// create variable getting the data from local storage
+// when you convert into array or object to backend use JSON.paras
+// JSON.paras is convert into localstorage data into the array
+    let savedTodos = JSON.parse(localStorage.getItem('todolist'))
+
+    if(savedTodos)
+    {
+      // in settodod updating the array and rendering the thing
+      // NULL is not use the map operation
+      setTodos(savedTodos);
+    }
+
+  },[])
 
   return (
     <div className="App">
@@ -77,25 +116,35 @@ function App() {
                 
      {allTodos.map((item, index) => {
   return (
-    <div key={index}>
-      {item}
-    </div>
+    <div className="todo-list-item d-flex align-items-center justify-content-between p-3  mb-3  shadow-sm" key={index}>
+          
+          <div className="text-section">
+            <h1 className="mb-1 fs-4 text-white">{item.title}</h1>
+            <p className="mb-0 " style={{color: "rgb(161, 161, 161)"}}>{item.description}</p>
+          </div>
+
+          <div className="todo-icons d-flex gap-3">
+            <FaCheck className="text-success fs-5 " onClick={()=>handleDeleteTodo(index)} style={{ cursor: "pointer" }} />
+            <FaTrash className=" fs-5 text-danger" style={{ cursor: "pointer" }} />
+          </div>
+        </div> 
+    
   );
 })}
 
 
-        {/* <div className="todo-list-item d-flex align-items-center justify-content-between p-3  mb-3  shadow-sm">
+      {/* <div className="todo-list-item d-flex align-items-center justify-content-between p-3  mb-3  shadow-sm">
           
           <div className="text-section">
-            <h1 className="mb-1 fs-2 text-white">Task 1</h1>
+            <h1 className="mb-1 fs-4 text-white">Task 1</h1>
             <p className="mb-0 " style={{color: "rgb(161, 161, 161)"}} >Description</p>
           </div>
 
           <div className="todo-icons d-flex gap-3">
-            <FaCheck className="text-success fs-2" style={{ cursor: "pointer" }} />
-            <FaTrash className="text-white fs-2" style={{ cursor: "pointer" }} />
+            <FaCheck className="text-success fs-5 " style={{ cursor: "pointer" }} />
+            <FaTrash className=" fs-5 text-danger" style={{ cursor: "pointer" }} />
           </div>
-        </div> */}
+        </div>  */}
       </div>
 
     </div>

@@ -111,6 +111,7 @@ body
 .todo-list-item {
   background-color: #444;
   display: flex;
+ 
   justify-content: space-between;
   align-items: center;
   padding: 25px 25px 10px 25px;
