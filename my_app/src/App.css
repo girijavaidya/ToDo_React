@@ -26,6 +26,15 @@ body
   border-radius: 10px;
 }
 
+.todo-input-container {
+  position: sticky;
+  top: 0;
+  
+  z-index: 1000; 
+  padding: 10px 0;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
 /* Flex container for inputs and button */
 .todo-input-group {
   display: flex;
@@ -81,10 +90,14 @@ body
 
 /* ToDo and Completed button area */
 .btn-area {
+  position: sticky;
+  top: 0;                 /* required */
   display: flex;
-  /* padding: 10px; */
-  /* gap: 1rem; */
+ 
+  padding: 10px 0;         /* optional */
+ 
 }
+
 
 .btn-area button {
   background-color: #5c5c5c;
