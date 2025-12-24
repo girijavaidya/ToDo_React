@@ -13,7 +13,7 @@ function App() {
   // state array
   const [allTodos, setTodos] = useState([]);
   const [newTitle, setNewTitle] = useState("");
-  const [newDescription, setNewdescription] = useState("");
+  const [newDescription, setNewDescription] = useState("");
   const [completedTodos, setCompletedTodos] = useState([]);
 
 
@@ -38,6 +38,10 @@ function App() {
     // then they pass the array
     localStorage.setItem('todolist',JSON.stringify
       (updatedTodoArr))
+      // 🔥 clear input boxes
+  setNewTitle("");
+  setNewDescription("");
+
   };
 
   // delete todo item
@@ -116,7 +120,7 @@ const handleCompleted = (index)=>
   {/* Description Input */}
   <div className="todo-input">
     <label className="form-label mb-1">Description</label>
-    <input type="text" value={newDescription} onChange={(e)=>setNewdescription(e.target.value)} className="form-control"  placeholder="Enter the Title Description" required/>
+    <input type="text" value={newDescription} onChange={(e)=>setNewDescription(e.target.value)} className="form-control"  placeholder="Enter the Title Description" required/>
   </div>
 
   {/* Buttons */}
